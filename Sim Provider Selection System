@@ -1,0 +1,41 @@
+class SimProvider:
+    def __init__(self):
+        self.providers = {
+            "Airtel": [
+                {"Plan": "₹299 - 1.5GB/day", "Validity": "28 days"},
+                {"Plan": "₹399 - 2GB/day", "Validity": "56 days"}
+            ],
+            "Jio": [
+                {"Plan": "₹249 - 1GB/day", "Validity": "28 days"},
+                {"Plan": "₹349 - 1.5GB/day", "Validity": "56 days"}
+            ],
+            "Vi": [
+                {"Plan": "₹269 - 1GB/day", "Validity": "28 days"},
+                {"Plan": "₹409 - 2GB/day", "Validity": "56 days"}
+            ]
+        }
+        self.user_plans = {}
+
+    def get_providers(self):
+        return list(self.providers.keys())
+
+    def get_plans(self, provider_name):
+        return self.providers.get(provider_name, "Provider not found!")
+
+    def purchase_plan(self, username, provider_name, plan_index):
+        if provider_name not in self.providers or plan_index >= len(self.providers[provider_name]):
+            return "Invalid provider or plan selection!"
+        selected_plan = self.providers[provider_name][plan_index]
+        self.user_plans[username] = selected_plan
+        return f"{username} purchased {selected_plan['Plan']} from {provider_name}."
+
+    def user_plan_details(self, username):
+        return self.user_plans.get(username, "No active plan!")
+
+# Example Usage
+sim = SimProvider()
+print("Available SIM Providers:", sim.get_providers())
+
+print("Jio Plans:", sim.get_plans("Jio"))
+print(sim.purchase_plan("shivu", "Jio", 1))
+print("Shivu's Plan:", sim.user_plan_details("shivu"))
